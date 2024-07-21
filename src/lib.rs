@@ -105,8 +105,8 @@ pub struct ThirdPersonCamera {
     /// Default is true
     pub zoom_enabled: bool,
     /// The min/max bounds of the camera.
-    /// This is different than the aim zoom. This zoom is the position the camera stays in relation to the camera target.
-    /// Zoom is a tuple. The first value is the minimum zoom. The smaller the value, the closer the camera can come to it's target. The second value is the maximum zoom. The greater the maximum zoom, the farther away the camera can go from it's target.
+    /// This is different from the aim zoom. This zoom is the position the camera stays in relation to the camera target.
+    /// Zoom is a tuple. The first value is the minimum zoom. The smaller the value, the closer the camera can come to its target. The second value is the maximum zoom. The greater the maximum zoom, the farther away the camera can go from its target.
     /// The zoom is adjusted using the scroll wheel.
     /// Default is Zoom::new(1.5, 3.0);
     pub zoom: Zoom,
@@ -196,8 +196,7 @@ pub struct GamepadResource(pub Gamepad);
 ///                aim_button: GamepadButton::new(gamepad, GamepadButtonType::LeftTrigger2),
 ///                mouse_orbit_button: GamepadButton::new(gamepad, GamepadButtonType::LeftTrigger),
 ///                offset_toggle_button: GamepadButton::new(gamepad, GamepadButtonType::DPadRight),
-///                x_sensitivity: 7.0,
-///                y_sensitivity: 4.0,
+///                sensitivity: Vec2::new(7.0, 4.0),
 ///                zoom_in_button: GamepadButton::new(gamepad, GamepadButtonType::DPadUp),
 ///                zoom_out_button: GamepadButton::new(gamepad, GamepadButtonType::DPadDown),
 ///            },
@@ -321,7 +320,7 @@ fn aim(
 
         let desired_zoom = cam.zoom.min * cam.aim_zoom;
 
-        // radius_copy is used for restoring the radius (zoom) to it's
+        // radius_copy is used for restoring the radius (zoom) to its
         // original value after releasing the aim button
         if cam.zoom.radius_copy.is_none() {
             cam.zoom.radius_copy = Some(cam.zoom.radius);
