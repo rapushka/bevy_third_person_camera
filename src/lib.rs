@@ -47,6 +47,9 @@ impl Plugin for ThirdPersonCameraPlugin {
 /// ```
 #[derive(Component)]
 pub struct ThirdPersonCamera {
+    /// Flag to lock/unlock the camera by code
+    /// Default is true
+    pub active: bool,
     /// Flag to indicate if the aim functionality is turned on.
     /// Default is false
     pub aim_enabled: bool,
@@ -118,6 +121,7 @@ pub struct ThirdPersonCamera {
 impl Default for ThirdPersonCamera {
     fn default() -> Self {
         ThirdPersonCamera {
+            active: true,
             aim_enabled: false,
             aim_button: MouseButton::Right,
             aim_speed: 3.0,
@@ -269,6 +273,10 @@ fn sync_player_camera(
     let Ok((cam, mut cam_transform)) = cam_q.get_single_mut() else {
         return;
     };
+    
+    if !cam.active {
+        return;
+    }
 
     // Calculate the desired camera translation based, radius, and xy_offset
     let rotation_matrix = Mat3::from_quat(cam_transform.rotation);
